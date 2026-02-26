@@ -1,0 +1,6 @@
+.env
+*.json
+.Rhistory
+.RData
+.Rproj.user
+extra_grade_basebiads.Rproj
