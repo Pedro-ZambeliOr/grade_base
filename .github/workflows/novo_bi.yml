@@ -1,0 +1,60 @@
+name: Extração RD Station
+
+on:
+  schedule:
+    # Roda a cada 3 horas
+    - cron: '0 */3 * * *'
+  workflow_dispatch: # Permite rodar manualmente pelo GitHub
+
+jobs:
+  run-r-script:
+    runs-on: ubuntu-latest
+
+    env:
+      GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+      BASE_BI_ID: ${{ secrets.BASE_BI_ID }}
+      base_ligacoes: ${{ secrets.base_ligacoes }}
+      base_novo_bi: ${{ secrets.base_novo_bi }}
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: 'release'
+          use-public-rspm: true
+
+      - name: Cache de pacotes R
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          # key depende apenas do install_packages.R
+          key: r-pkgs-${{ runner.os }}-${{ hashFiles('install_packages.R') }}
+          restore-keys: r-pkgs-${{ runner.os }}-
+
+      - name: Instalar dependências do sistema
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
+
+      - name: Instalar pacotes R (CRAN)
+        run: |
+          Rscript -e "
+            pkgs <- c('httr','jsonlite','tidyverse','openxlsx','readxl','reshape2','urltools','googlesheets4','dotenv')
+            pkgs_faltando <- pkgs[!pkgs %in% installed.packages()[,'Package']]
+            if (length(pkgs_faltando) > 0) install.packages(pkgs_faltando, dependencies = TRUE)
+          "
+
+      - name: Instalar abjutils (GitHub)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          Rscript -e "
+            if (!require('remotes', quietly = TRUE)) install.packages('remotes')
+            if (!require('abjutils', quietly = TRUE)) remotes::install_github('abjur/abjutils', auth_token = Sys.getenv('GITHUB_TOKEN'))
+          "
+
+      - name: Rodar script de extração
+        run: Rscript flex_bi_novo.R
