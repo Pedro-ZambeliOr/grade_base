@@ -1,4 +1,4 @@
-name: Extração RD Station
+name: Atualizar novo BI
 
 on:
   schedule:
