@@ -56,5 +56,5 @@ jobs:
             if (!require('abjutils', quietly = TRUE)) remotes::install_github('abjur/abjutils', auth_token = Sys.getenv('GITHUB_TOKEN'))
           "
 
-      - name: Rodar script de extração
+      - name: Atualizar novo BI
         run: Rscript flex_bi_novo.R
