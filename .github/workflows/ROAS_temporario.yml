@@ -16,6 +16,7 @@ jobs:
       GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
       BASE_BI_ID: ${{ secrets.BASE_BI_ID }}
       base_ligacoes: ${{ secrets.base_ligacoes }}
+      base_novo_bi: ${{ secrets.base_novo_bi }}
 
     steps:
       - name: Checkout do repositório
