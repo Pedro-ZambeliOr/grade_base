@@ -58,7 +58,8 @@ calendario <- expand.grid(
           canal_ads = c("GoogleAds", "MetaAds", "Debate_Raiz"))
 
 comercial <- read_sheet(ss = base_ligacoes,
-                        sheet = 'Consolidado') 
+                        sheet = 'Consolidado') %>% 
+mutate(`TOTAL EM HONORÁRIOS` = as.numeric(`TOTAL EM HONORÁRIOS`))
 
 comercial <- comercial %>%
           mutate(
