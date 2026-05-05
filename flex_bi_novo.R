@@ -59,7 +59,7 @@ calendario <- expand.grid(
 
 comercial <- read_sheet(ss = base_ligacoes,
                         sheet = 'Consolidado') %>% 
-mutate(`TOTAL EM HONORÁRIOS` = as.numeric(`TOTAL EM HONORÁRIOS`))
+  mutate(`TOTAL EM HONORÁRIOS` = as.numeric(unlist(`TOTAL EM HONORÁRIOS`)))
 
 comercial <- comercial %>%
           mutate(
