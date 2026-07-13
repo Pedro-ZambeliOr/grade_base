@@ -17,6 +17,7 @@ jobs:
       BASE_BI_ID: ${{ secrets.BASE_BI_ID }}
       base_ligacoes: ${{ secrets.base_ligacoes }}
       base_novo_bi: ${{ secrets.base_novo_bi }}
+      base_salva: ${{ secrets.base_salva }}
 
     steps:
       - name: Checkout do repositório
