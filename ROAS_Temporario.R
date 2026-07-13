@@ -217,7 +217,7 @@ gs4_auth(path = tmp_json)
 
 ####MANDAR BRUTA PRA RESERVA
 
-base_salva = Sys.getenv("base_salva")
+base_salva = Sys.getenv("BASE_SALVA")
 
 range_write(ss = base_salva,
             sheet = "Página1",
