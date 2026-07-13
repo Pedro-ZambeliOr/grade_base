@@ -206,13 +206,6 @@ print("################################## COMPLETO RD ##########################
 
 Sys.sleep(10)
 
-base_salva = Sys.getenv("base_salva")
-
-range_write(ss = base_salva,
-            sheet = "Página1",
-            data = data_completa)  
-
-
 ######### bases gastos
 
 ######### ENVIAR OS DADOS
@@ -221,6 +214,14 @@ json_content <- Sys.getenv("GOOGLE_SERVICE_ACCOUNT_JSON")
 tmp_json <- tempfile(fileext = ".json")
 writeLines(json_content, tmp_json)
 gs4_auth(path = tmp_json)
+
+####MANDAR BRUTA PRA RESERVA
+
+base_salva = Sys.getenv("base_salva")
+
+range_write(ss = base_salva,
+            sheet = "Página1",
+            data = data_completa)  
 
 BASE_BI_ID=Sys.getenv("BASE_BI_ID")
 
