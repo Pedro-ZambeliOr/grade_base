@@ -206,6 +206,12 @@ print("################################## COMPLETO RD ##########################
 
 Sys.sleep(10)
 
+base_salva = Sys.getenv("base_salva")
+
+range_write(ss = base_salva,
+            sheet = "Página1",
+            data = data_completa)  
+
 
 ######### bases gastos
 
